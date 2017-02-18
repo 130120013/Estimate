@@ -39,12 +39,12 @@ namespace Estimate
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
-            this.searchToolBar1 = new ADGV.SearchToolBar();
-            this.testTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tablesDataSet = new Estimate.TablesDataSet();
             this.testTableTableAdapter = new Estimate.TablesDataSetTableAdapters.TestTableTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.testTableBindingSource)).BeginInit();
+            this.searchToolBar1 = new ADGV.SearchToolBar();
+            this.testTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.tablesDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.testTableBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -127,6 +127,15 @@ namespace Estimate
             this.button8.Text = "Статистика";
             this.button8.UseVisualStyleBackColor = true;
             // 
+            // tablesDataSet
+            // 
+            this.tablesDataSet.DataSetName = "TablesDataSet";
+            this.tablesDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // testTableTableAdapter
+            // 
+            this.testTableTableAdapter.ClearBeforeFill = true;
+            // 
             // searchToolBar1
             // 
             this.searchToolBar1.AllowMerge = false;
@@ -144,15 +153,6 @@ namespace Estimate
             // 
             this.testTableBindingSource.DataMember = "TestTable";
             this.testTableBindingSource.DataSource = this.tablesDataSet;
-            // 
-            // tablesDataSet
-            // 
-            this.tablesDataSet.DataSetName = "TablesDataSet";
-            this.tablesDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // testTableTableAdapter
-            // 
-            this.testTableTableAdapter.ClearBeforeFill = true;
             // 
             // Form1
             // 
@@ -172,8 +172,8 @@ namespace Estimate
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.testTableBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tablesDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.testTableBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -181,7 +181,6 @@ namespace Estimate
 
         #endregion
         private TablesDataSet tablesDataSet;
-        private System.Windows.Forms.BindingSource testTableBindingSource;
         private TablesDataSetTableAdapters.TestTableTableAdapter testTableTableAdapter;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
@@ -192,6 +191,7 @@ namespace Estimate
         private Button button7;
         private Button button8;
         private ADGV.SearchToolBar searchToolBar1;
+        private BindingSource testTableBindingSource;
     }
 }
 

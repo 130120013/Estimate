@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -118,22 +119,48 @@ namespace Estimate
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            TextBox IDObject = new TextBox();
-            TextBox NameObject = new TextBox();
+            TabControl tabControl1 = new TabControl();
+
             if (button1.Text == ">")
             {            
                 button1.Text = "<";
                 dataGridView1.Width -= Form1.ActiveForm.Width / 100 * 45; 
                 button1.Location = new System.Drawing.Point(button1.Location.X - Form1.ActiveForm.Width / 100 * 45, dataGridView1.Location.Y);
-               
-               // Splitter split = new Splitter();
-                
-                IDObject.Size = NameObject.Size = new System.Drawing.Size(51, 51);
-                Form1.ActiveForm.Controls.Add(IDObject);
-                Form1.ActiveForm.Controls.Add(NameObject);
+
+                tabControl1.Size = new System.Drawing.Size(Form1.ActiveForm.Width / 100 * 43, button1.Size.Height);
+                tabControl1.TabPages.Add("Информация");
+                tabControl1.TabPages.Add("Контакты");
+                tabControl1.TabPages.Add("История");
+                tabControl1.TabPages.Add("Фото");
+                tabControl1.TabPages.Add("Источник");
+
+                // tab Информация
+
+                Label lbl1 = new Label();
+                lbl1.Text = "111111";
+
+                tabControl1.TabPages[0].Controls.Add(lbl1);
+
+                //Контакты
+
+                //История
+
+                //Фото
+
+                //Источник
+                WebBrowser wb = new WebBrowser();
+                Uri uri = new Uri(@"file://C:\Users\Jack\Desktop\Шикарный ОФИС на Фуникулёре — 105 кв. метров. [2].html");
+                wb.Navigate(uri); 
+                //wb.Navigate(@"file\\\C:\\Users\\Jack\\Desktop\\Черная речка (вдоль Шевченко), 12.5 соток., ИЖС, Собственность - Продажа земельных участков во Владивостоке");
+                wb.Location = new System.Drawing.Point(tabControl1.Location.X + 10, tabControl1.Location.Y + 10);
+                wb.Size = new System.Drawing.Size(tabControl1.Size.Width - 20, tabControl1.Size.Height - 40);
+                tabControl1.TabPages[4].Controls.Add(wb);
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+                Form1.ActiveForm.Controls.Add(tabControl1);
                 //split.Location = new System.Drawing.Point(button1.Location.X+ 60, button1.Location.Y);
-                IDObject.Location = new System.Drawing.Point(button1.Location.X + button1.Width * 2, button1.Location.Y);
-                NameObject.Location = new System.Drawing.Point(IDObject.Location.X + IDObject.Width*2, IDObject.Location.Y);
+                tabControl1.Location = new System.Drawing.Point(button1.Location.X + button1.Width * 2, button1.Location.Y);
+
                 
             }
             else
