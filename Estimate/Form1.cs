@@ -133,17 +133,69 @@ namespace Estimate
                 tabControl1.TabPages.Add("История");
                 tabControl1.TabPages.Add("Фото");
                 tabControl1.TabPages.Add("Источник");
-
+                Form1.ActiveForm.Controls.Add(tabControl1);
                 // tab Информация
 
                 Label lbl1 = new Label();
-                lbl1.Text = "111111";
+                lbl1.Text = "text ";
+                lbl1.Size = new System.Drawing.Size(500, 20);
+                DataRetriever retrievers =
+                   new DataRetriever(@"Data Source=(LocalDb)\v11.0;Initial Catalog=Tables;Integrated Security=True", "TestTable");
+                foreach (DataColumn column in retrievers.Columns)
+                   
+                        {
+                    lbl1.Text += " " + column.ColumnName;
 
+                }
                 tabControl1.TabPages[0].Controls.Add(lbl1);
 
                 //Контакты
 
+                Label lbluser = new Label();
+                Label lblemail = new Label();
+                Label lblphone = new Label();
+                Label lblsug = new Label();
+
+                lbluser.Text = "Пользователь";
+                lblemail.Text = "Email";
+                lblphone.Text = "Телефоны";
+                lblsug.Text = "Количество предложений";
+
+                lbluser.Location = new Point(tabControl1.Location.X + 10, tabControl1.Location.Y + 10);
+                lblemail.Location = new Point(tabControl1.Location.X + 10, tabControl1.Location.Y + 80);
+                lblphone.Location = new Point(tabControl1.Location.X + 10, tabControl1.Location.Y + 150);
+                lblsug.Location = new Point(tabControl1.Location.X + 10, tabControl1.Location.Y + 350);
+
+                tabControl1.TabPages[1].Controls.Add(lbluser);
+                tabControl1.TabPages[1].Controls.Add(lblemail);
+                tabControl1.TabPages[1].Controls.Add(lblphone);
+                tabControl1.TabPages[1].Controls.Add(lblsug);
+
+                TextBox txtuser = new TextBox();
+                TextBox txtemail = new TextBox();
+                RichTextBox txtphone = new RichTextBox();
+                TextBox txtsug = new TextBox();
+
+                txtuser.Size = new Size(250, 20);
+                txtemail.Size = new Size(250, 20);
+                txtphone.Size = new Size(250, 150);
+                txtsug.Size = new Size(250, 20);
+
+                txtuser.Location = new Point(tabControl1.Location.X + 10, tabControl1.Location.Y + 35);
+                txtemail.Location = new Point(tabControl1.Location.X + 10, tabControl1.Location.Y + 105);
+                txtphone.Location = new Point(tabControl1.Location.X + 10, tabControl1.Location.Y + 175);
+                txtsug.Location = new Point(tabControl1.Location.X + 10, tabControl1.Location.Y + 375);
+
+                tabControl1.TabPages[1].Controls.Add(txtuser);
+                tabControl1.TabPages[1].Controls.Add(txtemail);
+                tabControl1.TabPages[1].Controls.Add(txtphone);
+                tabControl1.TabPages[1].Controls.Add(txtsug);
                 //История
+
+                RichTextBox txtHistory = new RichTextBox();
+                txtHistory.Location = new System.Drawing.Point(tabControl1.Location.X + 10, tabControl1.Location.Y + 10);
+                txtHistory.Size = new System.Drawing.Size(tabControl1.Size.Width - 20, tabControl1.Size.Height - 40);
+                tabControl1.TabPages[2].Controls.Add(txtHistory);
 
                 //Фото
 
@@ -151,13 +203,12 @@ namespace Estimate
                 WebBrowser wb = new WebBrowser();
                 Uri uri = new Uri(@"file://C:\Users\Jack\Desktop\Шикарный ОФИС на Фуникулёре — 105 кв. метров. [2].html");
                 wb.Navigate(uri); 
-                //wb.Navigate(@"file\\\C:\\Users\\Jack\\Desktop\\Черная речка (вдоль Шевченко), 12.5 соток., ИЖС, Собственность - Продажа земельных участков во Владивостоке");
                 wb.Location = new System.Drawing.Point(tabControl1.Location.X + 10, tabControl1.Location.Y + 10);
                 wb.Size = new System.Drawing.Size(tabControl1.Size.Width - 20, tabControl1.Size.Height - 40);
                 tabControl1.TabPages[4].Controls.Add(wb);
 
 //----------------------------------------------------------------------------------------------------------------------------------------
-                Form1.ActiveForm.Controls.Add(tabControl1);
+
                 //split.Location = new System.Drawing.Point(button1.Location.X+ 60, button1.Location.Y);
                 tabControl1.Location = new System.Drawing.Point(button1.Location.X + button1.Width * 2, button1.Location.Y);
 
@@ -286,5 +337,6 @@ namespace Estimate
         {
 
         }
+
     }
 }
