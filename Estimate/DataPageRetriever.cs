@@ -132,5 +132,15 @@ namespace Estimate
             return table;
         }
 
+        public DataTable SupplySelect(DataTable datatable, string filter)
+        {
+            
+            DataRow[] filterdatarow = datatable.Select(@filter);
+
+            DataTable table = new DataTable();
+            table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+            adapter.Fill(table);
+            return table;
+        }
     }
 }

@@ -17,11 +17,11 @@ namespace Estimate
     /// </summary>
     public partial class Form1 : Form
     {
-        private ADGV.AdvancedDataGridView dataGridView1 = new ADGV.AdvancedDataGridView();
-        private Cache memoryCache;
+        //private ADGV.AdvancedDataGridView dataGridView1 = new ADGV.AdvancedDataGridView();
+        //private Cache memoryCache;
         private PleaseWaitForm f3 = new PleaseWaitForm();
         private List<bool> initialized = new List<bool>();
-        private int columnIndex;
+        private int columnIndex = 0;
         public Form1()
         {
             InitializeComponent();
@@ -29,56 +29,26 @@ namespace Estimate
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.dataGridView1.VirtualMode = true;
-            this.dataGridView1.Location = new System.Drawing.Point(12, button1.Location.Y);
-            this.dataGridView1.Size = new Size(1869, button1.Height);
-            //this.dataGridView1.Dock = DockStyle.Fill;
-            this.dataGridView1.VirtualMode = true;
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToOrderColumns = false;
-            this.dataGridView1.SelectionMode =
-                DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.CellValueNeeded += new
-                DataGridViewCellValueEventHandler(dataGridView1_CellValueNeeded);
-            this.dataGridView1.ColumnHeaderMouseClick += new DataGridViewCellMouseEventHandler(dataGridView1_ColumnHeaderMouseClick);
-            this.dataGridView1.CellMouseUp += new DataGridViewCellMouseEventHandler(dataGridView1_DataSourceComplete);
-            this.dataGridView1.CellMouseEnter += new DataGridViewCellEventHandler(cell);
-            //this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(dataGridView1_ColumnHeaderMouseClick);
-            this.Controls.Add(dataGridView1);
-            try
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "tablesDataSet2.TestTable". При необходимости она может быть перемещена или удалена.
+            this.testTableTableAdapter.Fill(this.tablesDataSet2.TestTable);
+             this.advancedDataGridView1.SortStringChanged += new EventHandler(dataGridView1_SortStringChanged);
+             this.advancedDataGridView1.CellMouseUp += new DataGridViewCellMouseEventHandler(dataGridView1_DataSourceComplete);
+             this.advancedDataGridView1.CellMouseEnter += new DataGridViewCellEventHandler(cell);
+             this.advancedDataGridView1.FilterStringChanged += new EventHandler(dataGridView1_FilterStringChanged);
+             this.advancedDataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(dataGridView1_ColumnHeaderMouseClick);
+           
+            for (int i = 0; i < advancedDataGridView1.Columns.Count; i++)
             {
-                DataRetriever retriever =
-                    new DataRetriever(@"Data Source=(LocalDb)\v11.0;Initial Catalog=Tables;Integrated Security=True", "TestTable");
-                memoryCache = new Cache(retriever, 10000);
-                foreach (DataColumn column in retriever.Columns)
-                {
-                    dataGridView1.Columns.Add(
-                        column.ColumnName, column.ColumnName);
-                    initialized.Add(false);
-                }
-                this.dataGridView1.RowCount = retriever.RowCount;
+                initialized.Add(false);
             }
-            catch (SqlException)
-            {
-                MessageBox.Show("Connection could not be established. " +
-                    "Verify that the connection string is valid.");
-                Application.Exit();
-            }
-
-            // Adjust the column widths based on the displayed values.
-            this.dataGridView1.AutoResizeColumns(
+            this.advancedDataGridView1.AutoResizeColumns(
                 DataGridViewAutoSizeColumnsMode.DisplayedCells);
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "tablesDataSet.TestTable". При необходимости она может быть перемещена или удалена.
-            // this.testTableTableAdapter.Fill(this.tablesDataSet.TestTable);
-
-            
         }
 
         private void cell(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.RowIndex == 0)
-            columnIndex = e.ColumnIndex;
+            if (e.RowIndex == 0)
+                columnIndex = e.ColumnIndex;
         }
         private void dataGridView1_ColumnHeaderMouseClick(object sender, EventArgs e)
         {
@@ -103,12 +73,6 @@ namespace Estimate
             f3.Close();
         }
 
-        private void dataGridView1_CellValueNeeded(object sender,
-     DataGridViewCellValueEventArgs e)
-        {
-            e.Value = memoryCache.RetrieveElement(e.RowIndex, e.ColumnIndex);
-        }
-
 
   
 
@@ -124,8 +88,8 @@ namespace Estimate
             if (button1.Text == ">")
             {            
                 button1.Text = "<";
-                dataGridView1.Width -= Form1.ActiveForm.Width / 100 * 45; 
-                button1.Location = new System.Drawing.Point(button1.Location.X - Form1.ActiveForm.Width / 100 * 45, dataGridView1.Location.Y);
+                advancedDataGridView1.Width -= Form1.ActiveForm.Width / 100 * 45; 
+                button1.Location = new System.Drawing.Point(button1.Location.X - Form1.ActiveForm.Width / 100 * 45, advancedDataGridView1.Location.Y);
 
                 tabControl1.Size = new System.Drawing.Size(Form1.ActiveForm.Width / 100 * 43, button1.Size.Height);
                 tabControl1.TabPages.Add("Информация");
@@ -139,14 +103,7 @@ namespace Estimate
                 Label lbl1 = new Label();
                 lbl1.Text = "text ";
                 lbl1.Size = new System.Drawing.Size(500, 20);
-                DataRetriever retrievers =
-                   new DataRetriever(@"Data Source=(LocalDb)\v11.0;Initial Catalog=Tables;Integrated Security=True", "TestTable");
-                foreach (DataColumn column in retrievers.Columns)
-                   
-                        {
-                    lbl1.Text += " " + column.ColumnName;
-
-                }
+               
                 tabControl1.TabPages[0].Controls.Add(lbl1);
 
                 //Контакты
@@ -199,6 +156,8 @@ namespace Estimate
 
                 //Фото
 
+
+
                 //Источник
                 WebBrowser wb = new WebBrowser();
                 Uri uri = new Uri(@"file://C:\Users\Jack\Desktop\Шикарный ОФИС на Фуникулёре — 105 кв. метров. [2].html");
@@ -208,8 +167,6 @@ namespace Estimate
                 tabControl1.TabPages[4].Controls.Add(wb);
 
 //----------------------------------------------------------------------------------------------------------------------------------------
-
-                //split.Location = new System.Drawing.Point(button1.Location.X+ 60, button1.Location.Y);
                 tabControl1.Location = new System.Drawing.Point(button1.Location.X + button1.Width * 2, button1.Location.Y);
 
                 
@@ -218,14 +175,10 @@ namespace Estimate
             { 
 
                 button1.Text = ">";
-                dataGridView1.Width += Form1.ActiveForm.Width / 100 * 45;
-                button1.Location = new System.Drawing.Point(dataGridView1.Location.X + dataGridView1.Width, dataGridView1.Location.Y);
+                advancedDataGridView1.Width += Form1.ActiveForm.Width / 100 * 45;
+                button1.Location = new System.Drawing.Point(advancedDataGridView1.Location.X + advancedDataGridView1.Width, advancedDataGridView1.Location.Y);
 
             }
-                //            Form1.ActiveForm.Controls.Remove(IDObject);
-                //Form1.ActiveForm.Controls.Remove(NameObject);
-                //IDObject.Dispose();
-                //NameObject.Dispose();
         }
 
         /// <summary>
@@ -274,8 +227,8 @@ namespace Estimate
             //задаем имя параметра
             param.ParameterName = "@TestID";
             //задаем значение параметра
-            var removed = dataGridView1.CurrentRow;
-            param.Value = dataGridView1.CurrentRow.Cells[0].Value;
+            var removed = advancedDataGridView1.CurrentRow;
+            param.Value = advancedDataGridView1.CurrentRow.Cells[0].Value;
             //задаем тип параметра
             param.SqlDbType = SqlDbType.Int;
             //передаем параметр объекту класса SqlCommand
@@ -285,8 +238,8 @@ namespace Estimate
                 cmd.ExecuteNonQuery();
 
                 //обновление таблицы
-                dataGridView1.Rows.Remove(removed);
-                dataGridView1.Refresh();
+                advancedDataGridView1.Rows.Remove(removed);
+                advancedDataGridView1.Refresh();
             }
             catch
             {
@@ -297,18 +250,7 @@ namespace Estimate
             
         }
 
-        private void fillByToolStripButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                this.testTableTableAdapter.FillBy(this.tablesDataSet.TestTable);
-            }
-            catch (System.Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
-            }
-
-        }
+        //}
         /// <summary>
         /// On click compares some rows
         /// </summary>
@@ -316,7 +258,7 @@ namespace Estimate
         /// <param name="e"></param>
         private void button7_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow c in dataGridView1.SelectedRows)
+            foreach (DataGridViewRow c in advancedDataGridView1.SelectedRows)
             {
                 var q = c.Cells;
                 string rrrrr = "";
@@ -328,15 +270,14 @@ namespace Estimate
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void dataGridView1_SortStringChanged(object sender, EventArgs e)
         {
-
+            this.testTableBindingSource.Sort = this.advancedDataGridView1.SortString;
         }
 
-        private void advancedDataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void dataGridView1_FilterStringChanged(object sender, EventArgs e)
         {
-
+            this.testTableBindingSource.Filter = this.advancedDataGridView1.FilterString;
         }
-
     }
 }

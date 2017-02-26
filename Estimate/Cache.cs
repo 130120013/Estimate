@@ -160,6 +160,29 @@ namespace Estimate
             return rowIndex <= cachePages[pageNumber].HighestIndex &&
                 rowIndex >= cachePages[pageNumber].LowestIndex;
         }
+        public List<string> filterCache(long rowIndex, long columnIndex, string filter)
+        {
+
+            List<string> k = new List<string>();
+            string element = null;
+            bool nl = IfPageCached_ThenSetElement(rowIndex, columnIndex, ref element);
+
+            if (nl)
+            {
+                DataTable table = dataSupply.SupplyPageOfData(
+               DataPage.MapToLowerBoundary(rowIndex), 1);
+
+                // Replace the cached page furthest from the requested cell
+                // with a new page containing the newly retrieved data.
+                     DataRetriever retrievers =
+                   new DataRetriever(@"Data Source=(LocalDb)\v11.0;Initial Catalog=Tables;Integrated Security=True", "TestTable");
+                retrievers.SupplyPageOfData(0, 1);
+
+                k.Add(RetrieveElement(rowIndex, columnIndex));
+            }
+            return k;
+
+        }
 
     }
 }

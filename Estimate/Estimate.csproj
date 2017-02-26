@@ -114,6 +114,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TablesDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="TablesDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TablesDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TablesDataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TablesDataSet2.xsd</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -155,6 +165,28 @@
     </None>
     <None Include="TablesDataSet.xss">
       <DependentUpon>TablesDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="TablesDataSet1.xsc">
+      <DependentUpon>TablesDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="TablesDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TablesDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TablesDataSet1.xss">
+      <DependentUpon>TablesDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="TablesDataSet2.xsc">
+      <DependentUpon>TablesDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="TablesDataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TablesDataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TablesDataSet2.xss">
+      <DependentUpon>TablesDataSet2.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
